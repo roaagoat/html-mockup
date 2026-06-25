@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<!-- saved from url=(0061)file:///C:/Users/roaa.radwan/Downloads/inventory_data_v2.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="./htmlmockup_files/tabler-icons.min.css">
+<style>
+  :root {
+    --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-serif: Georgia, 'Times New Roman', serif;
+    --font-mono: 'Courier New', monospace;
+    --color-background-primary: #ffffff;
+    --color-background-secondary: #f5f4f1;
+    --color-background-tertiary: #eeece8;
+    --color-text-primary: #1a1916;
+    --color-text-secondary: #6b6860;
+    --color-text-tertiary: #9c9a94;
+    --color-border-tertiary: rgba(0,0,0,0.12);
+    --color-border-secondary: rgba(0,0,0,0.22);
+    --color-border-primary: rgba(0,0,0,0.35);
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+    --border-radius-xl: 16px;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 12px; background: #fff; font-family: var(--font-sans); }
+</style>
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+.wrap { padding: 1.5rem 0; font-family: var(--font-sans); }
+.toolbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 8px; }
+.ds-label { font-size: 12px; color: var(--color-text-tertiary); }
+.reveal-btn { font-size: 13px; cursor: pointer; background: none; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); padding: 6px 14px; color: var(--color-text-secondary); display: flex; align-items: center; gap: 6px; }
+.reveal-btn:hover { background: var(--color-background-secondary); }
+.table-wrap { overflow-x: auto; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); }
+table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 780px; }
+thead { background: var(--color-background-secondary); }
+th { padding: 10px 12px; text-align: left; font-weight: 500; color: var(--color-text-secondary); font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 0.5px solid var(--color-border-tertiary); white-space: nowrap; }
+td { padding: 9px 12px; color: var(--color-text-primary); border-bottom: 0.5px solid var(--color-border-tertiary); white-space: nowrap; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--color-background-secondary); }
+.error-highlight td { background: #FAEEDA !important; }
+.error-cell { color: #854F0B !important; font-weight: 500; }
+.answers { margin-top: 1.25rem; display: none; flex-direction: column; gap: 10px; }
+.answers.open { display: flex; }
+.answer-card { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 0.75rem 1rem; font-size: 13px; display: flex; gap: 12px; align-items: flex-start; }
+.answer-row-badge { font-size: 11px; font-weight: 500; background: #FAEEDA; color: #854F0B; border-radius: 20px; padding: 2px 10px; white-space: nowrap; margin-top: 1px; }
+.answer-text { color: var(--color-text-secondary); line-height: 1.6; }
+.answer-text strong { color: var(--color-text-primary); font-weight: 500; }
+.calc-section { margin-top: 1.25rem; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); overflow: hidden; }
+.calc-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; background: var(--color-background-secondary); border-bottom: 0.5px solid var(--color-border-tertiary); }
+.calc-title { font-size: 11px; font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 6px; }
+.calc-hint { font-size: 11px; color: var(--color-text-tertiary); }
+.calc-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+.calc-cell { padding: 12px 14px; border-right: 0.5px solid var(--color-border-tertiary); }
+.calc-cell:last-child { border-right: none; }
+.calc-label { font-size: 11px; color: var(--color-text-tertiary); margin-bottom: 4px; }
+.calc-value { font-size: 18px; font-weight: 500; color: var(--color-text-primary); font-variant-numeric: tabular-nums; }
+.calc-formula { font-size: 10px; color: var(--color-text-tertiary); margin-top: 3px; font-family: var(--font-mono); }
+.calc-error { color: #854F0B !important; }
+.calc-error-bg { background: #FAEEDA !important; }
+.calc-note { display: none; font-size: 11px; color: #854F0B; margin-top: 4px; }
+.calc-note.show { display: block; }
+</style>
+
+</head><body><h2 class="sr-only">Inventory data with hidden mistakes — 10 rows, 3 errors to find, plus a broken quick calculator.</h2>
+
+<div class="wrap">
+  <div class="toolbar">
+    <span class="ds-label">10 inventory records · spot the mistakes</span>
+    <button class="reveal-btn" id="rev-btn" onclick="toggleReveal()">
+      <i class="ti ti-eye" aria-hidden="true"></i> Reveal answers
+    </button>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Product ID</th>
+          <th>Product name</th>
+          <th>Category</th>
+          <th>Unit price</th>
+          <th>Stock qty</th>
+          <th>Reorder level</th>
+          <th>Supplier</th>
+          <th>Last restocked</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"><tr class="error-highlight"><td>1</td><td>PRD-3801</td><td>Wireless Mouse</td><td>Peripherals</td><td>$29.O9</td><td>145</td><td>50</td><td>TechSupply Co.</td><td>2024-11-03</td><td>Active</td></tr><tr><td>2</td><td>PRD-3802</td><td>USB-C Hub</td><td>Peripherals</td><td>$40.99</td><td>32</td><td>40</td><td>TechSupply Co.</td><td>2024-12-01</td><td>Active</td></tr><tr><td>3</td><td>PRD-3803</td><td>Standing Desk</td><td>Furniture</td><td>$349.99</td><td>8</td><td>5</td><td>OfficePro Ltd.</td><td>2024-10-15</td><td>Active</td></tr><tr class="error-highlight"><td>4</td><td>PRD-3804</td><td>Laptop Stand</td><td>Peripherals</td><td>$-24.99</td><td>77</td><td>30</td><td>TechSupply Co.</td><td>2024-11-20</td><td>Active</td></tr><tr><td>5</td><td>PRD-3805</td><td>Monitor 27"</td><td>Displays</td><td>$399.99</td><td>19</td><td>20</td><td>ScreenWorld</td><td>2024-09-30</td><td>Active</td></tr><tr><td>6</td><td>PRD-3806</td><td>Mechanical Keyboard</td><td>Peripherals</td><td>$89.99</td><td>56</td><td>25</td><td>TechSupply Co.</td><td>2025-01-08</td><td>Active</td></tr><tr><td>7</td><td>PRD-3807</td><td>Ergonomic Chair</td><td>Furniture</td><td>$529.99</td><td>3</td><td>5</td><td>OfficePro Ltd.</td><td>2024-08-14</td><td>Active</td></tr><tr class="error-highlight"><td>8</td><td>PRD-3808</td><td>Webcam HD</td><td>Furniture</td><td>$74.99</td><td>28</td><td>35</td><td>ScreenWorld</td><td>2024-12-22</td><td>Active</td></tr><tr><td>9</td><td>PRD-3809</td><td>Desk Lamp</td><td>Accessories</td><td>$34.99</td><td>61</td><td>20</td><td>OfficePro Ltd.</td><td>2024-11-11</td><td>Active</td></tr><tr class="error-highlight"><td>10</td><td>PRD-3804</td><td>Laptop Stand</td><td>Peripherals</td><td>$24.99</td><td>77</td><td>30</td><td>TechSupply Co.</td><td>2024-11-20</td><td>Active</td></tr></tbody>
+    </table>
+  </div>
+
+  <div class="calc-section">
+    <div class="calc-header">
+      <span class="calc-title"><i class="ti ti-calculator" style="font-size:14px" aria-hidden="true"></i> Quick summary — unit prices</span>
+      <span class="calc-hint">Based on all 10 rows</span>
+    </div>
+    <div class="calc-grid">
+      <div class="calc-cell" id="calc-total">
+        <div class="calc-label">Total (sum of prices)</div>
+        <div class="calc-value" id="val-total">$1550.83</div>
+        <div class="calc-formula" id="frm-total">=SUM(E1:E10)</div>
+        <div class="calc-note" id="note-total"></div>
+      </div>
+      <div class="calc-cell" id="calc-avg">
+        <div class="calc-label">Average unit price</div>
+        <div class="calc-value" id="val-avg">$155.08</div>
+        <div class="calc-formula" id="frm-avg">=AVERAGE(E1:E10)</div>
+        <div class="calc-note" id="note-avg"></div>
+      </div>
+      <div class="calc-cell" id="calc-max">
+        <div class="calc-label">Highest unit price</div>
+        <div class="calc-value" id="val-max">$529.99</div>
+        <div class="calc-formula" id="frm-max">=MAX(E1:E10)</div>
+        <div class="calc-note" id="note-max"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="answers" id="answers">
+    <div class="answer-card">
+      <span class="answer-row-badge">Row 4</span>
+      <span class="answer-text"><strong>Negative price</strong> — Unit price shows $-24.99. A minus sign crept in, likely a keyboard slip. No product can have a negative price.</span>
+    </div>
+    <div class="answer-card">
+      <span class="answer-row-badge">Row 8</span>
+      <span class="answer-text"><strong>Wrong category</strong> — Webcam HD is filed under "Furniture" instead of "Peripherals". Easy to miss visually, but it silently breaks any category-level reporting or pivot table grouping.</span>
+    </div>
+    <div class="answer-card">
+      <span class="answer-row-badge">Row 10</span>
+      <span class="answer-text"><strong>Duplicate Product ID</strong> — PRD-3804 appears in both rows 4 and 10. Same product, same supplier, same date — likely a double entry from two systems syncing. Row 4 also carries the price error.</span>
+    </div>
+    <div class="answer-card">
+      <span class="answer-row-badge">Calculator</span>
+      <span class="answer-text"><strong>Letter O in Wireless Mouse price</strong> — The price "$29.O9" uses the letter O instead of zero. Excel skips it entirely in SUM and AVERAGE — so both calculations are wrong. The total is missing ~$29 and the average is calculated over only 9 rows. Easy to miss because the number looks fine at a glance.</span>
+    </div>
+  </div>
+</div>
+
+<script>
+const rows = [
+  [1,  "PRD-3801", "Wireless Mouse",      "Peripherals", "$29.O9",  145, 50, "TechSupply Co.", "2024-11-03", "Active", true,  []],
+  [2,  "PRD-3802", "USB-C Hub",           "Peripherals", "$40.99",  32,  40, "TechSupply Co.", "2024-12-01", "Active", false, []],
+  [3,  "PRD-3803", "Standing Desk",       "Furniture",   "$349.99", 8,   5,  "OfficePro Ltd.", "2024-10-15", "Active", false, []],
+  [4,  "PRD-3804", "Laptop Stand",        "Peripherals", "$-24.99", 77,  30, "TechSupply Co.", "2024-11-20", "Active", true,  [4]],
+  [5,  "PRD-3805", "Monitor 27\"",        "Displays",    "$399.99", 19,  20, "ScreenWorld",    "2024-09-30", "Active", false, []],
+  [6,  "PRD-3806", "Mechanical Keyboard", "Peripherals", "$89.99",  56,  25, "TechSupply Co.", "2025-01-08", "Active", false, []],
+  [7,  "PRD-3807", "Ergonomic Chair",     "Furniture",   "$529.99", 3,   5,  "OfficePro Ltd.", "2024-08-14", "Active", false, []],
+  [8,  "PRD-3808", "Webcam HD",           "Furniture",   "$74.99",  28,  35, "ScreenWorld",    "2024-12-22", "Active", true,  [3]],
+  [9,  "PRD-3809", "Desk Lamp",           "Accessories", "$34.99",  61,  20, "OfficePro Ltd.", "2024-11-11", "Active", false, []],
+  [10, "PRD-3804", "Laptop Stand",        "Peripherals", "$24.99",  77,  30, "TechSupply Co.", "2024-11-20", "Active", true,  [1]],
+];
+
+let revealed = false;
+
+const rawPrices   = ["$29.O9","$40.99","$349.99","$-24.99","$399.99","$89.99","$529.99","$74.99","$34.99","$24.99"];
+const brokenTotal = rawPrices.reduce((sum, p) => { const n = parseFloat(p.replace('$','').replace('O','')); return isNaN(n) ? sum : sum+n; }, 0);
+const brokenCount = rawPrices.filter(p => !isNaN(parseFloat(p.replace('$','').replace('O','')))).length;
+const brokenAvg   = brokenTotal / brokenCount;
+const brokenMax   = Math.max(...rawPrices.map(p => { const n = parseFloat(p.replace('$','').replace('O','')); return isNaN(n)?-Infinity:n; }));
+const realTotal   = rawPrices.reduce((sum, p) => { const n = parseFloat(p.replace('$','').replace('O','0')); return isNaN(n)?sum:sum+n; }, 0);
+const realAvg     = realTotal / rawPrices.length;
+
+function fmt(n) { return '$' + n.toFixed(2); }
+
+function renderCalc() {
+  document.getElementById('val-total').textContent = fmt(brokenTotal);
+  document.getElementById('frm-total').textContent = '=SUM(E1:E10)';
+  document.getElementById('val-avg').textContent   = fmt(brokenAvg);
+  document.getElementById('frm-avg').textContent   = '=AVERAGE(E1:E10)';
+  document.getElementById('val-max').textContent   = fmt(brokenMax);
+  document.getElementById('frm-max').textContent   = '=MAX(E1:E10)';
+
+  if (revealed) {
+    document.getElementById('calc-total').classList.add('calc-error-bg');
+    document.getElementById('calc-avg').classList.add('calc-error-bg');
+    document.getElementById('val-total').classList.add('calc-error');
+    document.getElementById('val-avg').classList.add('calc-error');
+    document.getElementById('note-total').textContent = `Should be ${fmt(realTotal)} — off by ~$29.09 (row 1 skipped)`;
+    document.getElementById('note-total').classList.add('show');
+    document.getElementById('note-avg').textContent = `Should be ${fmt(realAvg)} — only 9 of 10 prices counted`;
+    document.getElementById('note-avg').classList.add('show');
+  } else {
+    ['calc-total','calc-avg'].forEach(id => document.getElementById(id).classList.remove('calc-error-bg'));
+    ['val-total','val-avg'].forEach(id => document.getElementById(id).classList.remove('calc-error'));
+    ['note-total','note-avg'].forEach(id => document.getElementById(id).classList.remove('show'));
+  }
+}
+
+function renderTable() {
+  const tbody = document.getElementById('tbody');
+  tbody.innerHTML = '';
+  rows.forEach(row => {
+    const isError = row[10];
+    const errorCols = row[11];
+    const tr = document.createElement('tr');
+    if (isError) tr.classList.add('error-highlight');
+    const cells = [row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9]];
+    cells.forEach((val, i) => {
+      const td = document.createElement('td');
+      td.textContent = typeof val === 'number' ? val.toLocaleString() : val;
+      if (revealed && errorCols.includes(i)) td.classList.add('error-cell');
+      if (revealed && row[0] === 1 && i === 4) td.classList.add('error-cell');
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+}
+
+function toggleReveal() {
+  revealed = !revealed;
+  renderTable();
+  renderCalc();
+  document.getElementById('answers').classList.toggle('open', revealed);
+  const btn = document.getElementById('rev-btn');
+  btn.innerHTML = revealed
+    ? '<i class="ti ti-eye-off" aria-hidden="true"></i> Hide answers'
+    : '<i class="ti ti-eye" aria-hidden="true"></i> Reveal answers';
+}
+
+renderTable();
+renderCalc();
+</script>
+
+</body></html>
