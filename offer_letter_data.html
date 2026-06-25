@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<!-- saved from url=(0070)file:///C:/Users/roaa.radwan/Downloads/offer_letter_spot_errors_1.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Offer Letter Data — Spot the Errors</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #F8F7F4;
+    --surface: #FFFFFF;
+    --border: #E4E2DC;
+    --border-strong: #C8C5BC;
+    --text-primary: #1A1916;
+    --text-secondary: #6B6860;
+    --text-tertiary: #9C9A94;
+    --amber: #FAEEDA;
+    --amber-dark: #854F0B;
+    --teal-light: #E1F5EE;
+    --teal: #0F6E56;
+    --purple-light: #EEEDFE;
+    --purple: #534AB7;
+    --red-light: #FCEBEB;
+    --red: #A32D2D;
+    --radius: 10px;
+    --radius-sm: 6px;
+  }
+  body { background: var(--bg); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: var(--text-primary); min-height: 100vh; padding: 2rem 1rem; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .page-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 6px; }
+  .page-title { font-size: 24px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
+  .page-sub { font-size: 14px; color: var(--text-secondary); margin-bottom: 1.5rem; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .toolbar { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--border); flex-wrap: wrap; gap: 8px; }
+  .ds-label { font-size: 12px; color: var(--text-tertiary); }
+  .reveal-btn { font-size: 13px; font-weight: 500; cursor: pointer; background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: 7px 14px; color: var(--text-secondary); display: flex; align-items: center; gap: 6px; transition: all 0.15s; }
+  .reveal-btn:hover { background: var(--bg); color: var(--text-primary); }
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 1050px; }
+  th { padding: 10px 14px; text-align: left; font-weight: 500; color: var(--text-tertiary); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; background: var(--bg); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  td { padding: 10px 14px; color: var(--text-primary); border-bottom: 1px solid var(--border); white-space: nowrap; font-size: 13px; }
+  tr:last-child td { border-bottom: none; }
+  tbody tr:hover td { background: var(--bg); }
+  .err-row td { background: #FFFBF5 !important; }
+  .err-cell { color: var(--amber-dark) !important; font-weight: 600; }
+  .answers { display: none; flex-direction: column; gap: 10px; padding: 16px; border-top: 1px solid var(--border); background: var(--bg); }
+  .answers.open { display: flex; }
+  .answer-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; font-size: 13px; display: flex; gap: 12px; align-items: flex-start; }
+  .ans-badge { font-size: 11px; font-weight: 600; background: var(--amber); color: var(--amber-dark); border-radius: 20px; padding: 3px 10px; white-space: nowrap; margin-top: 1px; }
+  .answer-text { color: var(--text-secondary); line-height: 1.65; }
+  .answer-text strong { color: var(--text-primary); font-weight: 600; }
+  .pill { display: inline-block; font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 20px; }
+  .pill-accepted { background: var(--teal-light); color: var(--teal); }
+  .pill-pending  { background: var(--purple-light); color: var(--purple); }
+  .pill-declined { background: var(--red-light); color: var(--red); }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="page-eyebrow">Data Quality Exercise</div>
+  <div class="page-title">Offer letter data — spot the errors</div>
+  <div class="page-sub">10 records, 5 mistakes hidden in plain sight. Can you find them all?</div>
+
+  <div class="card">
+    <div class="toolbar">
+      <span class="ds-label">10 offer letter records · spot the mistakes</span>
+      <button class="reveal-btn" id="rev-btn" onclick="toggleReveal()">
+        <i class="ti ti-eye"></i> Reveal answers
+      </button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Candidate name</th>
+            <th>Email</th>
+            <th>Job ID</th>
+            <th>Offer job title</th>
+            <th>Verbal offer</th>
+            <th>Written offer</th>
+            <th>Offer expiry</th>
+            <th>Response</th>
+            <th>Start date</th>
+            <th>Salary (annual)</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"><tr><td>1</td><td>James Okonkwo</td><td>j.okonkwo@email.com</td><td>HR-301</td><td>HR Business Partner</td><td>2024-01-08</td><td>2024-01-12</td><td>2024-01-26</td><td><span class="pill pill-accepted">Accepted</span></td><td>2024-02-19</td><td>$72,000</td></tr><tr><td>2</td><td>Lena Brandt</td><td>l.brandt@email.com</td><td>FIN-088</td><td>Finance Analyst</td><td>2024-02-05</td><td>2024-02-14</td><td>2024-03-01</td><td><span class="pill pill-accepted">Accepted</span></td><td>2024-03-11</td><td>$68,500</td></tr><tr><td>3</td><td>Ahmed Khalil</td><td>a.khalil@email.com</td><td>OPS-044</td><td>Operations Manager</td><td>2024-02-20</td><td>2024-02-25</td><td>2024-03-10</td><td><span class="pill pill-accepted">Accepted</span></td><td>2024-04-01</td><td>$95,000</td></tr><tr><td>4</td><td>Sara Mostafa</td><td>s.mostafa@email.com</td><td>MKT-099</td><td>Brand Manager</td><td>2024-03-28</td><td>2024-04-02</td><td>2024-04-16</td><td>2024-04-15</td><td>2024-04-10</td><td>$78,000</td></tr><tr><td>5</td><td>Maya Patel</td><td>maya.patel@email.com</td><td>MKT-112</td><td>Marketing Coordinator</td><td>2024-04-10</td><td>2024-04-15</td><td>2024-04-29</td><td><span class="pill pill-accepted">Accepted</span></td><td>2024-05-20</td><td>$65,000</td></tr><tr><td>6</td><td>Maya Patel</td><td>maya.patel@email.com</td><td>MKT-112</td><td>Marketing Coordinator</td><td>2024-04-11</td><td>2024-04-16</td><td>2024-04-30</td><td><span class="pill pill-pending">Pending</span></td><td></td><td>$65,000</td></tr><tr><td>7</td><td>Chen Wei</td><td>c.wei@email.com</td><td>ENG-198</td><td>Senior Engineer</td><td>2024-05-01</td><td>2024-05-06</td><td>2024-05-20</td><td><span class="pill pill-accepted">Accepted</span></td><td>2024-06-10</td><td>$8,500</td></tr><tr><td>8</td><td>Fatima Al-Rashid</td><td>f.alrashid@email.com</td><td>ENG-205</td><td>Product Manager</td><td>2024-05-14</td><td>2024-05-19</td><td>2024-06-02</td><td><span class="pill pill-accepted">Accepted</span></td><td>2024-07-01</td><td>$115,000</td></tr><tr><td>9</td><td>Sarah Jones</td><td>sarah.jones@gmial.com</td><td>SAL-067</td><td>Sales Executive</td><td>2024-06-03</td><td>2024-06-08</td><td>2024-06-22</td><td><span class="pill pill-pending">Pending</span></td><td></td><td>$74,000</td></tr><tr><td>10</td><td>Tom Nguyen</td><td>t.nguyen@email.com</td><td>PRD-031</td><td>Product Designer</td><td>2024-06-18</td><td>2024-06-24</td><td>2024-07-08</td><td><span class="pill pill-accepted">Accepted</span></td><td>2024-08-05</td><td>$92,000</td></tr></tbody>
+      </table>
+    </div>
+    <div class="answers" id="answers">
+      <div class="answer-card">
+        <span class="ans-badge">Row 4</span>
+        <span class="answer-text"><strong>Start date before acceptance</strong> — The candidate's response is dated 2024-04-15 but the start date is 2024-04-10. They were logged as starting 5 days before they officially accepted the offer.</span>
+      </div>
+      <div class="answer-card">
+        <span class="ans-badge">Rows 5 &amp; 6</span>
+        <span class="answer-text"><strong>Duplicate candidate on same role</strong> — Maya Patel (maya.patel@email.com) appears twice for Job ID MKT-112 with slightly different dates. Classic double-entry from two recruiters or two systems logging the same candidate.</span>
+      </div>
+      <div class="answer-card">
+        <span class="ans-badge">Row 7</span>
+        <span class="answer-text"><strong>Monthly salary entered as annual</strong> — Salary shows $8,500 for a Senior Engineer. Every other role is in the $65k–$115k range. This is almost certainly $8,500/month = $102,000/year — someone entered the monthly figure in the annual field.</span>
+      </div>
+      <div class="answer-card">
+        <span class="ans-badge">Row 8</span>
+        <span class="answer-text"><strong>Job ID vs offer title mismatch</strong> — Job ID ENG-205 corresponds to a Software Engineer requisition, but the Offer job title reads "Product Manager." The candidate may be onboarded under the wrong role on paper.</span>
+      </div>
+      <div class="answer-card">
+        <span class="ans-badge">Row 9</span>
+        <span class="answer-text"><strong>Typo in email domain</strong> — Email is sarah.jones@gmial.com ("gmial" not "gmail"). The offer was marked Sent but the candidate never received it — it likely bounced silently with no follow-up triggered.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const rows = [
+  { n:1,  name:"James Okonkwo",    email:"j.okonkwo@email.com",   jobId:"HR-301",  title:"HR Business Partner",   verbal:"2024-01-08", written:"2024-01-12", expiry:"2024-01-26", response:"Accepted",   start:"2024-02-19", salary:"$72,000",  err:false, errCols:[] },
+  { n:2,  name:"Lena Brandt",      email:"l.brandt@email.com",    jobId:"FIN-088", title:"Finance Analyst",       verbal:"2024-02-05", written:"2024-02-14", expiry:"2024-03-01", response:"Accepted",   start:"2024-03-11", salary:"$68,500",  err:false, errCols:[] },
+  { n:3,  name:"Ahmed Khalil",     email:"a.khalil@email.com",    jobId:"OPS-044", title:"Operations Manager",    verbal:"2024-02-20", written:"2024-02-25", expiry:"2024-03-10", response:"Accepted",   start:"2024-04-01", salary:"$95,000",  err:false, errCols:[] },
+  { n:4,  name:"Sara Mostafa",     email:"s.mostafa@email.com",   jobId:"MKT-099", title:"Brand Manager",         verbal:"2024-03-28", written:"2024-04-02", expiry:"2024-04-16", response:"2024-04-15", start:"2024-04-10", salary:"$78,000",  err:true,  errCols:[8,9] },
+  { n:5,  name:"Maya Patel",       email:"maya.patel@email.com",  jobId:"MKT-112", title:"Marketing Coordinator", verbal:"2024-04-10", written:"2024-04-15", expiry:"2024-04-29", response:"Accepted",   start:"2024-05-20", salary:"$65,000",  err:true,  errCols:[1,2,3] },
+  { n:6,  name:"Maya Patel",       email:"maya.patel@email.com",  jobId:"MKT-112", title:"Marketing Coordinator", verbal:"2024-04-11", written:"2024-04-16", expiry:"2024-04-30", response:"Pending",    start:"",           salary:"$65,000",  err:true,  errCols:[1,2,3] },
+  { n:7,  name:"Chen Wei",         email:"c.wei@email.com",       jobId:"ENG-198", title:"Senior Engineer",       verbal:"2024-05-01", written:"2024-05-06", expiry:"2024-05-20", response:"Accepted",   start:"2024-06-10", salary:"$8,500",   err:true,  errCols:[10] },
+  { n:8,  name:"Fatima Al-Rashid", email:"f.alrashid@email.com",  jobId:"ENG-205", title:"Product Manager",       verbal:"2024-05-14", written:"2024-05-19", expiry:"2024-06-02", response:"Accepted",   start:"2024-07-01", salary:"$115,000", err:true,  errCols:[3,4] },
+  { n:9,  name:"Sarah Jones",      email:"sarah.jones@gmial.com", jobId:"SAL-067", title:"Sales Executive",       verbal:"2024-06-03", written:"2024-06-08", expiry:"2024-06-22", response:"Pending",    start:"",           salary:"$74,000",  err:true,  errCols:[2] },
+  { n:10, name:"Tom Nguyen",       email:"t.nguyen@email.com",    jobId:"PRD-031", title:"Product Designer",      verbal:"2024-06-18", written:"2024-06-24", expiry:"2024-07-08", response:"Accepted",   start:"2024-08-05", salary:"$92,000",  err:false, errCols:[] },
+];
+
+let revealed = false;
+
+function pill(r) {
+  if (r === 'Accepted') return '<span class="pill pill-accepted">Accepted</span>';
+  if (r === 'Pending')  return '<span class="pill pill-pending">Pending</span>';
+  if (r === 'Declined') return '<span class="pill pill-declined">Declined</span>';
+  return r;
+}
+
+function renderTable() {
+  const tbody = document.getElementById('tbody');
+  tbody.innerHTML = '';
+  rows.forEach(row => {
+    const tr = document.createElement('tr');
+    if (revealed && row.err) tr.classList.add('err-row');
+    const vals = [row.n, row.name, row.email, row.jobId, row.title, row.verbal, row.written, row.expiry, row.response, row.start, row.salary];
+    vals.forEach((val, i) => {
+      const td = document.createElement('td');
+      if (i === 8 && (val === 'Accepted' || val === 'Pending' || val === 'Declined')) {
+        td.innerHTML = pill(val);
+      } else {
+        td.textContent = val;
+      }
+      if (revealed && row.errCols.includes(i)) td.classList.add('err-cell');
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+}
+
+function toggleReveal() {
+  revealed = !revealed;
+  renderTable();
+  document.getElementById('answers').classList.toggle('open', revealed);
+  document.getElementById('rev-btn').innerHTML = revealed
+    ? '<i class="ti ti-eye-off"></i> Hide answers'
+    : '<i class="ti ti-eye"></i> Reveal answers';
+}
+
+renderTable();
+</script>
+
+
+</body></html>
